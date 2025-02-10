@@ -34,6 +34,7 @@ weapon_mesh = NodePath("SMG")
 muzzle_flash = NodePath("MuzzleFlash")
 
 [node name="SMG" parent="." index="1" instance=ExtResource("2_pdlxn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7, -0.35, -1.8)
 
 [node name="Suppressors_003" parent="SMG" index="0"]
 transform = Transform3D(0, 0, 2.5, 0, 2.5, 0, -2.5, 0, 0, 0, 0.0476248, -0.831521)
@@ -71,8 +72,11 @@ layers = 2
 transform = Transform3D(0, 0, 2.5, 0, 2.5, 0, -2.5, 0, 0, 0, -0.0358921, 0.643292)
 layers = 2
 
+[node name="RayCast3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+
 [node name="MuzzleFlash" type="GPUParticles3D" parent="." index="3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.35438e-06, 0.0495356, -1.08014)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.700163, -0.303223, -2.82902)
 layers = 2
 cast_shadow = 0
 emitting = false
