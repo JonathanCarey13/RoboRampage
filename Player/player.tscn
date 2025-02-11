@@ -1,10 +1,12 @@
-[gd_scene load_steps=11 format=3 uid="uid://chkb8qnlmcdhl"]
+[gd_scene load_steps=13 format=3 uid="uid://chkb8qnlmcdhl"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_pxkut"]
 [ext_resource type="Script" path="res://Player/SmoothCamera.gd" id="2_dm3nc"]
+[ext_resource type="PackedScene" uid="uid://dn6o1qvmatm7f" path="res://Weapons/Rifle.tscn" id="3_1f5rd"]
 [ext_resource type="Script" path="res://Player/Crosshair.gd" id="3_3kxdo"]
 [ext_resource type="PackedScene" uid="uid://boeesibr2qrn6" path="res://Weapons/SMG.tscn" id="3_dsbsg"]
 [ext_resource type="Texture2D" uid="uid://bgwh6cll3qnae" path="res://Player/damage.png" id="5_wh7pr"]
+[ext_resource type="PackedScene" uid="uid://nm55apbko1kh" path="res://Player/game_over_menu.tscn" id="6_ctc0r"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_0atdg"]
 
@@ -89,9 +91,6 @@ top_level = true
 cull_mask = 1048573
 script = ExtResource("2_dm3nc")
 
-[node name="SMG" parent="CameraPivot/SmoothCamera" instance=ExtResource("3_dsbsg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
-
 [node name="RemoteTransform3D" type="RemoteTransform3D" parent="CameraPivot/SmoothCamera"]
 remote_path = NodePath("../../../SubViewportContainer/SubViewport/WeaponCamera")
 
@@ -113,6 +112,12 @@ render_target_update_mode = 4
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.5)
 cull_mask = 2
 fov = 40.0
+
+[node name="WeaponHandler" type="Node3D" parent="SubViewportContainer/SubViewport/WeaponCamera"]
+
+[node name="Rifle" parent="SubViewportContainer/SubViewport/WeaponCamera/WeaponHandler" instance=ExtResource("3_1f5rd")]
+
+[node name="SMG" parent="SubViewportContainer/SubViewport/WeaponCamera/WeaponHandler" instance=ExtResource("3_dsbsg")]
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 anchors_preset = 15
@@ -140,3 +145,6 @@ libraries = {
 "": SubResource("AnimationLibrary_35ta0")
 }
 autoplay = "RESET"
+
+[node name="GameOverMenu" parent="." instance=ExtResource("6_ctc0r")]
+visible = false
