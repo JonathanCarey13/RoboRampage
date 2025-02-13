@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://chkb8qnlmcdhl"]
+[gd_scene load_steps=17 format=3 uid="uid://chkb8qnlmcdhl"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_pxkut"]
 [ext_resource type="Script" path="res://Player/SmoothCamera.gd" id="2_dm3nc"]
@@ -8,6 +8,8 @@
 [ext_resource type="Script" path="res://Player/WeaponHandler.gd" id="3_r8a8d"]
 [ext_resource type="Texture2D" uid="uid://bgwh6cll3qnae" path="res://Player/damage.png" id="5_wh7pr"]
 [ext_resource type="PackedScene" uid="uid://nm55apbko1kh" path="res://Player/game_over_menu.tscn" id="6_ctc0r"]
+[ext_resource type="Script" path="res://Player/AmmoHandler.gd" id="6_ojo70"]
+[ext_resource type="FontFile" uid="uid://iqvuu8fcoswy" path="res://Assets/RubikIso-Regular.ttf" id="9_ve3rt"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_0atdg"]
 
@@ -74,6 +76,10 @@ _data = {
 "TakeDamage": SubResource("Animation_hm621")
 }
 
+[sub_resource type="LabelSettings" id="LabelSettings_4oo26"]
+font = ExtResource("9_ve3rt")
+font_size = 64
+
 [node name="Player" type="CharacterBody3D" groups=["player"]]
 script = ExtResource("1_pxkut")
 
@@ -119,11 +125,19 @@ script = ExtResource("3_r8a8d")
 weapon_1 = NodePath("SMG")
 weapon_2 = NodePath("Rifle")
 
-[node name="Rifle" parent="SubViewportContainer/SubViewport/WeaponCamera/WeaponHandler" instance=ExtResource("3_1f5rd")]
+[node name="Rifle" parent="SubViewportContainer/SubViewport/WeaponCamera/WeaponHandler" node_paths=PackedStringArray("ammo_handler") instance=ExtResource("3_1f5rd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.12)
+ammo_handler = NodePath("../../AmmoHandler")
 
-[node name="SMG" parent="SubViewportContainer/SubViewport/WeaponCamera/WeaponHandler" instance=ExtResource("3_dsbsg")]
+[node name="SMG" parent="SubViewportContainer/SubViewport/WeaponCamera/WeaponHandler" node_paths=PackedStringArray("ammo_handler") instance=ExtResource("3_dsbsg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.015)
+ammo_handler = NodePath("../../AmmoHandler")
+ammo_type = 1
+
+[node name="AmmoHandler" type="Node" parent="SubViewportContainer/SubViewport/WeaponCamera" node_paths=PackedStringArray("ammo_label")]
+unique_name_in_owner = true
+script = ExtResource("6_ojo70")
+ammo_label = NodePath("../../../../MarginContainer/AmmoLabel")
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 anchors_preset = 15
@@ -154,6 +168,24 @@ libraries = {
 "": SubResource("AnimationLibrary_35ta0")
 }
 autoplay = "RESET"
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="AmmoLabel" type="Label" parent="MarginContainer" groups=["player"]]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+text = "1234"
+label_settings = SubResource("LabelSettings_4oo26")
 
 [node name="GameOverMenu" parent="." instance=ExtResource("6_ctc0r")]
 visible = false
