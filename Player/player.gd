@@ -6,6 +6,7 @@ const SPEED = 5.0
 @export var fall_multiplier: float = 2.5
 @export var max_hitpoints := 100
 @export var aim_multiplier := 0.7
+@export var mouse_sensetivity := 0.003
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -73,7 +74,7 @@ func _physics_process(delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-			mouse_motion = -event.relative * 0.001
+			mouse_motion = -event.relative * mouse_sensetivity
 			if Input.is_action_pressed("aim"):
 				mouse_motion *= aim_multiplier
 	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
