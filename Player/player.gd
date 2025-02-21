@@ -1,12 +1,11 @@
 extends CharacterBody3D
 
-const SPEED = 5.0
-
 @export var jump_height: float = 1.0
 @export var fall_multiplier: float = 2.5
 @export var max_hitpoints := 100
 @export var aim_multiplier := 0.7
 @export var mouse_sensetivity := 0.003
+@export var speed := 5.0
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -60,14 +59,19 @@ func _physics_process(delta: float) -> void:
 	var input_dir := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if direction:
-		velocity.x = direction.x * SPEED
-		velocity.z = direction.z * SPEED
+		velocity.x = direction.x * speed
+		velocity.z = direction.z * speed
 		if Input.is_action_pressed("aim"):
 			velocity.x *= aim_multiplier
 			velocity.y *= aim_multiplier
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.z = move_toward(velocity.z, 0, SPEED)
+		velocity.x = move_toward(velocity.x, 0, speed)
+		velocity.z = move_toward(velocity.z, 0, speed)
+		
+	if Input.is_action_pressed("sprint"):
+		speed = 10.0
+	else:
+		speed = 5.0
 
 	move_and_slide()
 
