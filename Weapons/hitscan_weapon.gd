@@ -36,7 +36,7 @@ func shoot() -> void:
 		ray_cast_3d.force_raycast_update()
 		if ray_cast_3d.is_colliding():
 			var collider = ray_cast_3d.get_collider()
-			printt("Weapon fired!!", collider)
+			#printt("Weapon fired!!", collider)
 			weapon_mesh.position.z += recoil
 			if collider is Enemy:
 				collider.hitpoints -= weapon_damage
